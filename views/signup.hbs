@@ -1,11 +1,79 @@
-<h3> This is sign up page </h3>
-<h3>Feel free to make this page user friendly.</h3>
-</br>
-<form method="post" action="signup">
-<input type="text" name="username" placeholder="User name"><br>
-<input type="password" name="password" placeholder="Password"><br>
-<input type="submit" value="Sign Up">
-</form>
-{{#if errorMessage}}
-<p>Username already exists</p>
+<style>
+     html,body{
+    background-color:floralwhite;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+  .box{
+    background-color:#ed553b;
+    padding-inline-start: 5%;
+    padding-inline-end: 5%;
+    padding: 50px,50px,100px,50px;
+    text-align: center;
+    max-width: 600px;
+    min-height: 350px;
+    margin:  auto;
+    margin-top: 50px;
+    border-radius: 5%;
+  }
+  .ArialFontWhite{
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  color: #ffffff;
+}
+button{
+    width: 200px;
+    height: 50px;
+    margin:10px;
+    border-style: none;
+}
+.margin10{
+    margin: 10px;
+}
+h2{
+  padding-top: 50px;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  color: #ffffff;
+}
+input.submit{
+    width: 250px;
+    height: 50px;
+    margin:20px;
+    border-style: none;
+}
+</style>
+
+<body>
+<div class="box ArialFontWhite">
+<h2> User Signup Page</h2>
+
+{{#if user}}
+<p>Welcome, Administrator {{user.username}}</p>
 {{/if}}
+
+<form method="post" action="/signup">
+<div style = "float:left; width: 150px;">username</div>
+<input type="text" name="username" placeholder="User name"><br>
+
+<div style = "float:left; width: 150px;">&nbsp;</div>
+<input type="radio" name="usertype" value="student" checked>student
+<input type="radio" name="usertype" value="admin">admin <br><br>
+
+<div style = "float:left; width: 150px;">Password</div>
+<input type="password" name="password" placeholder="Password"><br>
+
+<br><div style = "float:left; width: 200px;">&nbsp;</div>
+<div style="padding-bottom: 50px;"><input class="submit" type="submit" value="Submit the user information"></div>
+</form>
+</div>
+<br> <a href="/admin">Back to Main Administrative Page</a><br>
+{{#if exist}}
+<h3 style="color:red;">Username already exists</h3>
+{{/if}}
+
+{{#if success}}
+<h3 style="color:red;">User added successfully</h3>
+{{/if}}
+
+</body>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
