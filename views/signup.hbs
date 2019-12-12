@@ -1,0 +1,11 @@
+<h3> This is sign up page </h3>
+<h3>Feel free to make this page user friendly.</h3>
+</br>
+<form method="post" action="signup">
+<input type="text" name="username" placeholder="User name"><br>
+<input type="password" name="password" placeholder="Password"><br>
+<input type="submit" value="Sign Up">
+</form>
+{{#if errorMessage}}
+<p>Username already exists</p>
+{{/if}}

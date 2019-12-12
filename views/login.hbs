@@ -1,0 +1,28 @@
+<main class="text-center">
+  <form class="form-signin" method="post" action="login">
+    <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+    <input class="form-control" type="text" name="username" placeholder="User name" required autofocus>
+    <input class="form-control" type="password" name="password" placeholder="Password" required>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  </form>
+  </main>
+<!-- if you don't want bootstraps -->
+<!--
+<form method="post" action="login">
+<input type="text" name="username" placeholder="User name"><br>
+<input type="password" name="password" placeholder="Password"><br>
+<input type="submit" value="Log in">
+</form>
+-->
+{{#if success}}
+<p>Successfully created an account. Please log in</p>
+{{/if}}
+
+{{#if errorMessage}}
+<p>{{errorMessage}}</p>
+{{/if}}
