@@ -117,47 +117,7 @@ router.get('/admin',loggedIn,function(req, res){
   }
 });
 
-router.get('/addTicket',function(req, res, next) {
-  res.render('addTicket', {user: req.user, error: req.flash('error')});
-});
 
-router.post('/addTicket',function(req, res, next) {
-  client.query('SELECT * FROM users WHERE username = $1', [req.user.username], function(err, result) {
-    if (err) {
-      console.log("unable to query SELECT");
-      next(err);
-    }
-    if (result.rows.length > 0) {
-        console.log("user exist");
-        console.log(result.rows);
-        /////////update//////////
-        client.query('INSERT INTO ticket (username,location,type,description, createdate,status) VALUES($1, $2, $3, $4, $5, $6)', [req.user.username,req.body.location,req.body.type, req.body.description,Date().toString(),"Open"], function(err, result) {
-          if (err) {
-            console.log("unable to query INSERT");
-            next(err);
-          }
-          console.log("Assignment creation is successful");
-          res.render('addTicket', {user: req.user , success: "true" });
-        });
-        ////////////////////////
-    }
-    else{
-      console.log("error checking is needed")
-      res.render('addTicket', {user: req.user ,error: "Username doesnt exist"});
-
-    }
-  });
-});
-
-router.post('/adminDashboard',function(req, res) {
-  client.query('Update ticket set status = $1 where id = $2', [req.body.status, req.body.key], function(err, result) {
-    if (err) {
-      console.log("unable to query Update");
-      next(err);
-    }
-  });
-  res.redirect('/adminDashboard'); 
-});
 
 router.get('/signup',function(req, res) {
   res.render('signup', { user: req.user }); // signup.hbs
@@ -199,6 +159,16 @@ router.get('/adminDashboard', function(req, res, next) {
   else{
     res.redirect('/notAdmin');
   }
+});
+
+router.post('/adminDashboard',function(req, res) {
+  client.query('Update ticket set status = $1 where id = $2', [req.body.status, req.body.key], function(err, result) {
+    if (err) {
+      console.log("unable to query Update");
+      next(err);
+    }
+  });
+  res.redirect('/adminDashboard'); 
 });
 
 router.get('/crimson',function(req, res) {
