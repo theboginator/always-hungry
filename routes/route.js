@@ -141,7 +141,9 @@ router.get('/signup',function(req, res) {
 
 router.post('/signup', function(req, res, next) {
   console.log(req.body);
+  console.log("Showing signup page")
   client.query('SELECT * FROM users WHERE username = $1', [req.body.username], function(err, result) {
+    console.log("queried database for user")
     if (err) {
       console.log("unable to query SELECT");
       next(err);
@@ -150,7 +152,7 @@ router.post('/signup', function(req, res, next) {
       res.render('signup', { user: req.user,exist:"true" });
     }
     else{
-      client.query('INSERT INTO users (username, password, isAdmin) VALUES($1, $2, $3)', [req.body.username,encryptPWD(req.body.password),req.body.usertype], function(err, result) {
+      client.query('INSERT INTO users (username, password, isAdmin) VALUES($1, $2, $3)', [req.body.username,encryptPWD(req.body.password), 'student'], function(err, result) {
         if (err) {
           console.log("unable to query INSERT");
           next(err);

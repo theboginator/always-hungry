@@ -6,4 +6,219 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+var env = require('dotenv').config();
+const Client = require('pg').Client;
+const client = new Client({
+  connectionString: process.env.DATABASE_URL
+});
+client.connect(); //connect to database
+
+var passport = require('passport');
+var bcrypt = require('bcryptjs');
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+  res.render('login', {error: req.flash('error')});
+
+});
+
+router.post('/',
+  // depends on the fiels "isAdmin", redirect to the different path: admin or notAdmin
+  passport.authenticate('local', { failureRedirect: '/', failureFlash:true }),
+  function(req, res, next) {
+    if (req.user.isadmin == 'admin'){
+      res.redirect('/admin');
+    }
+    else {
+      res.redirect('/notAdmin');
+    }
+});
+
+router.get('/logout', function(req, res){
+    req.logout(); //passport provide it
+    res.redirect('/'); // Successful. redirect to localhost:3000/exam
+});
+
+router.get('/changePassword', function(req, res){
+    res.render('changePassword',{user: req.user});
+});
+
+function encryptPWD(password){
+    var salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password, salt);
+}
+
+router.post('/changePassword', function(req, res,next){
+  var msg="";
+  client.query('SELECT * FROM users WHERE username=$1',[req.user.username], function(err,result){
+    if (err) {
+      console.log("exam.js: sql error ");
+      next(err); // throw error to error.hbs.
+    }
+    else{
+        bcrypt.compare(req.body.current,req.user.password,function(err,result){
+        if(result){
+        if(req.body.new1 == req.body.new2){
+          client.query("UPDATE users SET password=($2) where username=($1)",[req.user.username,(encryptPWD(req.body.new1))], function(err2,result){          
+          });
+          msg="Password successfully changed!"; 
+        }
+        else{
+          msg="Passwords do not match.";
+        }
+      }
+      else{
+        msg ="Current password is not correct.";
+      }
+      res.render('changePassword',{user: req.user, msg: msg});
+    });
+    }
+  });
+});
+
+function loggedIn(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+}
+
+router.get('/notAdmin',loggedIn,function(req, res, next){
+  if(req.user.isadmin !="admin"){
+  client.query('SELECT * FROM ticket WHERE username=$1 order by status asc',[req.user.username], function(err,result){
+    if (err) {
+      console.log("exam.js: sql error ");
+      next(err); // throw error to error.hbs.
+    }
+    else if (result.rows.length > 0) {
+      console.log("Here I am");
+      res.render('notAdmin', {rows: result.rows, user: req.user} );
+    }
+    else{
+      console.log("This student does not have any assignment");
+      res.render('notAdmin', {rows: result.rows, user: req.user} );
+
+    }
+  });
+}
+else{
+res.redirect('/admin');
+}
+});
+
+
+router.get('/admin',loggedIn,function(req, res){
+  if(req.user.isadmin=='admin'){
+      res.render('admin', { user: req.user }); 
+  }
+  else{
+    res.redirect('/notAdmin');
+  }
+});
+
+router.get('/addTicket',function(req, res, next) {
+  res.render('addTicket', {user: req.user, error: req.flash('error')});
+});
+
+router.post('/addTicket',function(req, res, next) {
+  client.query('SELECT * FROM users WHERE username = $1', [req.user.username], function(err, result) {
+    if (err) {
+      console.log("unable to query SELECT");
+      next(err);
+    }
+    if (result.rows.length > 0) {
+        console.log("user exist");
+        console.log(result.rows);
+        /////////update//////////
+        client.query('INSERT INTO ticket (username,location,type,description, createdate,status) VALUES($1, $2, $3, $4, $5, $6)', [req.user.username,req.body.location,req.body.type, req.body.description,Date().toString(),"Open"], function(err, result) {
+          if (err) {
+            console.log("unable to query INSERT");
+            next(err);
+          }
+          console.log("Assignment creation is successful");
+          res.render('addTicket', {user: req.user , success: "true" });
+        });
+        ////////////////////////
+    }
+    else{
+      console.log("error checking is needed")
+      res.render('addTicket', {user: req.user ,error: "Username doesnt exist"});
+
+    }
+  });
+});
+
+router.post('/adminDashboard',function(req, res) {
+  client.query('Update ticket set status = $1 where id = $2', [req.body.status, req.body.key], function(err, result) {
+    if (err) {
+      console.log("unable to query Update");
+      next(err);
+    }
+  });
+  res.redirect('/adminDashboard'); 
+});
+
+router.get('/signup',function(req, res) {
+  res.render('signup', { user: req.user }); // signup.hbs
+  
+});
+
+
+router.post('/signup', function(req, res, next) {
+  console.log(req.body);
+  client.query('SELECT * FROM users WHERE username = $1', [req.body.username], function(err, result) {
+    if (err) {
+      console.log("unable to query SELECT");
+      next(err);
+    }
+    if (result.rows.length > 0) {
+      res.render('signup', { user: req.user,exist:"true" });
+    }
+    else{
+      client.query('INSERT INTO users (username, password, level) VALUES($1, $2, $3)', [req.body.username,encryptPWD(req.body.password), 'student'], function(err, result) {
+        if (err) {
+          console.log("unable to query INSERT");
+          next(err);
+        }
+        console.log("User successfully added");
+        res.redirect('profile');
+      });
+    }
+  });
+});
+
+router.get('/adminDashboard', function(req, res, next) {
+  console.log(req.user.isadmin);
+  if(req.user.isadmin=="admin"){
+    client.query('SELECT * FROM ticket order by status asc', function(err, result){
+        if(err){ next(err);}
+        res.render('adminDashboard', result)
+    });
+  }
+  else{
+    res.redirect('/notAdmin');
+  }
+});
+
+router.get('/crimson',function(req, res) {
+  res.render('crimson', { user: req.user }); // crimson.hbs
+  
+});
+
+router.get('/eastCampusCrap',function(req, res) {
+  res.render('eastCampusCrap', { user: req.user }); // eastCampusCrap.hbs
+  
+});
+
+router.get('/bearsDen',function(req, res) {
+  res.render('bearsDen', { user: req.user }); // bearsDen.hbs
+  
+});
+
+router.get('/tilly',function(req, res) {
+  res.render('tilly', { user: req.user }); // tilly.hbs
+  
+});
+
 module.exports = router;

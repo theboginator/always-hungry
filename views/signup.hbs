@@ -55,9 +55,7 @@ input.submit{
 <div style = "float:left; width: 150px;">username</div>
 <input type="text" name="username" placeholder="User name"><br>
 
-<div style = "float:left; width: 150px;">&nbsp;</div>
-<input type="radio" name="usertype" value="student" checked>student
-<input type="radio" name="usertype" value="admin">admin <br><br>
+<div style = "float:left; width: 150px;">&nbsp;</div><br>
 
 <div style = "float:left; width: 150px;">Password</div>
 <input type="password" name="password" placeholder="Password"><br>
@@ -66,7 +64,7 @@ input.submit{
 <div style="padding-bottom: 50px;"><input class="submit" type="submit" value="Submit the user information"></div>
 </form>
 </div>
-<br> <a href="/admin">Back to Main Administrative Page</a><br>
+<br> <a href="/index">Back to Main Page</a><br>
 {{#if exist}}
 <h3 style="color:red;">Username already exists</h3>
 {{/if}}
