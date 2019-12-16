@@ -179,13 +179,22 @@ router.post('/adminDashboard',function(req, res) {
 });
 
 router.get('/crimson',function(req, res) {
+  /*
   client.query('SELECT * FROM reviews WHERE hall = $1', 'crimson', function(err, result) {
     if (err) {
       console.log("unable to query SELECT for crimson dining");
       next(err);
     }
-    res.render('crimson', result, { user: req.user }); // crimson.hbs
+    if(result.rows.length > 0){
+      //load in review data for stuff
+    }
+    else{
+      //There are no reviews; set data values to 0
+    }
   });
+    */
+    res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
+
 
   
 });
