@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'How To Eat This' });
 });
 
 var env = require('dotenv').config();
@@ -17,12 +18,12 @@ var passport = require('passport');
 var bcrypt = require('bcryptjs');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render('login', {error: req.flash('error')});
+router.get('/login', function(req, res, next) {
+  res.render('login');
 
 });
 
-router.post('/',
+router.post('/login',
   // depends on the fiels "isAdmin", redirect to the different path: admin or notAdmin
   passport.authenticate('local', { failureRedirect: '/', failureFlash:true }),
   function(req, res, next) {
@@ -30,9 +31,15 @@ router.post('/',
       res.redirect('/admin');
     }
     else {
-      res.redirect('/notAdmin');
+      res.redirect('/profile');
     }
 });
+
+router.get('/profile', function(req, res, next) {
+  res.render('profile', {user: req.user});
+
+});
+
 
 router.get('/logout', function(req, res){
     req.logout(); //passport provide it
