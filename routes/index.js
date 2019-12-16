@@ -180,7 +180,7 @@ router.post('/adminDashboard',function(req, res) {
 
 router.get('/crimson',function(req, res) {
   /*
-  client.query('SELECT * FROM reviews WHERE hall = $1', 'crimson', function(err, result) {
+  client.query('SELECT service, speed, food, busy FROM reviews WHERE hall = $1', 'crimson', function(err, result) {
     if (err) {
       console.log("unable to query SELECT for crimson dining");
       next(err);
@@ -192,8 +192,9 @@ router.get('/crimson',function(req, res) {
       //There are no reviews; set data values to 0
     }
   });
-    */
-    res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
+  */
+  var result = client.query("SELECT service, speed, food, busy FROM reviews WHERE hall = 'crimson'");
+  res.render('crimson', result, { user: req.user }); // Load the crimson review page with the reviews table
 
 
   
