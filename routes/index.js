@@ -92,7 +92,7 @@ function loggedIn(req, res, next) {
 
 function averageReview(result, col){
   console.log("The table is: ")
-  console.log(result.col);
+  console.log(result.rows);
   console.log("Rows: ");
   console.log(result.rows.length);
   console.log("Columns: ");
@@ -201,12 +201,16 @@ router.get('/crimson',function(req, res) {
     }
     
     console.log("Queried for crimson data, got: ");
-    console.log(result);
+    console.log(result.rows);
+    console.log(result.rowCount);
+    /*
     service = averageReview(result, 0);
     speed = averageReview(result, 1);
     food = averageReview(result, 2);
     busy = averageReview(result, 3);
     console.log(service);
+    
+    */
     res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
 
 
@@ -219,7 +223,7 @@ router.get('/crimson',function(req, res) {
     }
   });
   
-
+/*
   console.log("Queried for crimson data, got: ");
   console.log(result);
   service = averageReview(result, 0);
@@ -229,7 +233,7 @@ router.get('/crimson',function(req, res) {
   console.log(service);
   res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
 
-
+*/
   
 });
 
