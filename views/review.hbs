@@ -1,0 +1,116 @@
+    <title>How To Eat This</title>
+    <meta charset="utf-8">
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet">
+
+
+    <h1><i class="fas fa-paw"></i> Always Hungry?<i class="fas fa-paw"></i></h1>
+    <br>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+        p{font-family: "Arial",Arial, sans-serif; font-size:28pt; color: #ff1700;margin-right:250px;text-align: left;margin-left:10%;margin-top:10%}
+        h1{text-align: center;  background-color: #ff1700;}
+        .login{text-align: left;font-size:20pt;float:left;}
+        body, html {  height: 100%;margin: 0;}
+        .backGround{
+            background-image: url("/images/background.jpg");
+            background-repeat: no-repeat;
+            background-position-x: 60%;
+            background-size: cover;
+        }
+           .ArialFontWhite{
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        color: #002fff;
+    }
+    
+    input{
+    width: 200px;
+    height: 50px;
+    margin:10px;
+    border-style: none;
+}
+    </style>
+</head>
+<body>
+<body class="backGround">
+<form method="post" action="Review">
+    <div class="container" style="padding-inline: 50px;">
+        <div style="max-width: 75%"class="col box left-block">
+          <h2 class="text-center" style="padding-top: 50px;">Submit A Review</h2>
+          <h3 class="text-center">How was your dining experience {{user.username}}?</h3>
+            <label for="hall">Location</label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="hall" id="hall">
+                <option value="crimson">Crimson</option>
+                <option value="bearsDen">Bear's Den</option>
+                <option value="tilly">Tilly</option>
+                <option value="eastCampusCrap">ECC</option>
+            </select><br>
+        </div>
+        <label for="service"> Quality of Service </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="service" id="service">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="speed"> Speed of Service </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="speed" id="speed">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="food"> Quality of Food </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="food" id="food">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="busy"> How Busy is it? </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="busy" id="busy">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="comment"> Any Comments? </label>
+        <div class="mb-3 row justify-content-center">
+            <textarea cols="50" rows="10" name="comment" placeholder="Food was pretty good! / Food was not great!"></textarea><br>
+            <br><div style = "float:left;">&nbsp;</div>
+        </div >
+            <div class="mb-3 row justify-content-center">
+            <input type="submit" value="Submit Review">
+            </div>
+        </div>
+    </div>
+</form>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+<br> <a href="/">Back to Home Page</a><br>
+
+{{#if success}}
+<h3 style="color:red;">Review Submitted!</h3>
+{{/if}}
+
+
+{{#if error}}
+<p style="color: red;">{{error}}</p>
+{{/if}}
+
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">

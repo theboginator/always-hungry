@@ -26,22 +26,34 @@
    
 
 
-
-<div>
-
-    <p>
-        Quality of Service<i class="fas fa-star"style="font-size:54px color:white;"></i> <i class="fas fa-star"style="font-size:54px color:white;"></i>
-        <br>Speed of Service<i class="fa fa-star "style="font-size:24px color:white;"></i>
-        <br>Quality of Food<i class="fas fa-star"style="font-size:24px color:white;"></i><i class="fas fa-star"style="font-size:24px color:white;"></i><i class="fas fa-star"style="font-size:24px color:white;"></i><i class="fas fa-star"style="font-size:24px color:white;"></i>
-        <br> How Busy the Hall is<i class="fas fa-users"style="font-size:24px color:white;"></i><i class="fas fa-users"style="font-size:24px color:white;"></i><i class="fas fa-users"style="font-size:24px color:white;"></i>
-    </p>
-</div>
-</body>
-
-
-<table id="East Campus Crap Stats">
+<table id="Current Ratings">
   <thead>
-  <tr><th>Username</th>    <th>    Reported</th>    <th>    Comment</th></tr>
+  <tr><th>Quality of Service</th><th>Speed of Service</th><th>Quality of Food</th><th>How Busy is the Hall?</th></tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr><td> {{ service }}</td>
+          <td> {{ speed }}</td>
+          <td> {{ food }}</td>
+          <td> {{ busy }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+<table id="Crim Stats">
+  <thead>
+  <tr><th>Username</th><th>Reported</th><th>Comment</th></tr>
   </thead>
   <tbody>
     {{#each rows}}

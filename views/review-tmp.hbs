@@ -1,0 +1,118 @@
+
+<style>
+    html,body{
+        background-color:rgb(255, 0, 0);
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+    .box{
+        background-color:#1100ff;
+        text-align: center;
+        max-width: 75%;
+        min-height: 350px;
+        margin:  auto;
+        border-radius: 5%;
+
+    }
+    .ArialFontWhite{
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        color: #ffffff;
+    }
+    
+    input{
+    width: 200px;
+    height: 50px;
+    margin: 10px;
+    border-style: none;
+}
+</style>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Review</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="ArialFontWhite">
+<form method="post" action="addTicket">
+    <div class="container" style="padding-inline: 50px;">
+        <div style="max-width: 75%"class="col box left-block">
+          <h2 class="text-center" style="padding-top: 50px;">Submit A Review</h2>
+          <h3 class="text-center">How was your dining experience {{user.username}}?</h3>
+            <label for="hall">Location</label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="location" id="location">
+                <option value="crimson">Crimson</option>
+                <option value="bearsDen">Bear's Den</option>
+                <option value="tilly">Tilly</option>
+                <option value="eastCampusCrap">ECC</option>
+            </select><br>
+        </div>
+        <label for="service">Quality of Service </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="type" id="type">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="speed">Speed of Service </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="type" id="type">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="food">Quality of Food </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="type" id="type">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="busy">How Busy is it? </label>
+        <div class="mb-3 row justify-content-center">
+            <select class="form-control col-md-3 col-sm-12" name="type" id="type">
+                <option value=1>1 / 5</option>
+                <option value=2>2 / 5</option>
+                <option value=3>3 / 5</option>
+                <option value=4>4 / 5</option>
+                <option value=5>5 / 5</option>
+            </select><br>
+        </div>
+        <label for="comment">Any Comments? </label>
+        <div class="mb-3 row justify-content-center">
+            <textarea cols="50" rows="10" name="description" placeholder="Enter your description for the isssue here"></textarea><br>
+            <br><div style = "float:left;">&nbsp;</div>
+        </div >
+            <div style="padding-bottom: 50px;">
+            <input type="submit" value="Submit Review">
+            </div>
+        </div>
+    </div>
+</form>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+<br> <a href="/notAdmin">Back to Home Page</a><br>
+
+{{#if success}}
+<h3 style="color:red;">Ticket created</h3>
+{{/if}}
+
+
+{{#if error}}
+<p style="color: red;">{{error}}</p>
+{{/if}}
+
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">

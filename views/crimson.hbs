@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>How To Eat This</title>
+    <title>Always Hungry?</title>
     <meta charset="utf-8">
     <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet">
 
@@ -26,7 +26,7 @@
    
 
 
-
+<!--
 <div>
 
     <p>
@@ -37,7 +37,32 @@
     </p>
 </div>
 </body>
+-->
 
+<table id="Current Ratings">
+  <thead>
+  <tr><th>Quality of Service</th><th>Speed of Service</th><th>Quality of Food</th><th>How Busy is the Hall?</th></tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr><td> {{ service }}</td>
+          <td> {{ speed }}</td>
+          <td> {{ food }}</td>
+          <td> {{ busy }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
 
 <table id="Crim Stats">
   <thead>
