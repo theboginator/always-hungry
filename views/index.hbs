@@ -14,18 +14,15 @@
         body, html {  height: 100%;margin: 0;}
         .backGround{
             background-image: url("public/images/background.jpg");
-            position:fixed;
-            width:fit-content;
-            height:100vh;
-            z-index:-1000;
-            top:0;
-            left:0;
+            background-repeat: no-repeat;
+            background-position-x: 60%;
+            background-size: cover;
         }
     </style>
 </head>
 <body>
-<div class="backGround">
-    <img class = "backGround">
+<div class=" fullscreen backGround">
+    <img class = "background" src = {"localhost:3000/public/images/background.jpg"} alt = "logo">
 </div>
 <div class="login">
          <i class="fa fa-user"style="font-size:54px color:white;"></i><a href="/login">log in </a>
