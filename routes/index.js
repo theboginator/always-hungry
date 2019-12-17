@@ -192,7 +192,7 @@ router.post('/adminDashboard',function(req, res) {
 });
 
 router.get('/crimtest', function(req, response, next) {
-  client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson'", function(err, result) {
+  client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson' ORDER BY published DESC", function(err, result) {
     if (err) {
       console.log("unable to query SELECT for crimson dining");
       next(err);
@@ -205,7 +205,7 @@ router.get('/crimson',function(req, response, res) {
 
   
   
-  client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson'", function(err, result) {
+  client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson' ORDER BY published DESC", function(err, result) {
     if (err) {
       console.log("unable to query SELECT for crimson dining");
       next(err);
