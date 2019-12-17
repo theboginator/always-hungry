@@ -190,7 +190,7 @@ router.post('/adminDashboard',function(req, res) {
   });
   res.redirect('/adminDashboard'); 
 });
-
+/*
 router.get('/crimtest', function(req, response, next) {
   client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson' ORDER BY published DESC", function(err, result) {
     if (err) {
@@ -200,6 +200,7 @@ router.get('/crimtest', function(req, response, next) {
     response.render('crimtest', result);
   });
 });
+*/
 
 router.get('/crimson',function(req, response, res) {
 
