@@ -92,11 +92,11 @@ function loggedIn(req, res, next) {
 
 function averageReview(result, col){
   console.log("The table is: ")
-  console.log(result.rows);
+  console.log(result.col);
   console.log("Rows: ");
   console.log(result.rows.length);
   console.log("Columns: ");
-  console.log(result.rows[col].height);
+  console.log(result.rows[col]);
   var average = 0;
   for(var ctr=0; ctr<result.rows.height; ctr++){
     average = average + result.rows[1].height;
