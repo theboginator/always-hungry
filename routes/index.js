@@ -1,12 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'How To Eat This' });
-});
-
 var env = require('dotenv').config();
 const Client = require('pg').Client;
 const client = new Client({
@@ -16,6 +10,11 @@ client.connect(); //connect to database
 
 var passport = require('passport');
 var bcrypt = require('bcryptjs');
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'How To Eat This' });
+});
 
 /* GET users listing. */
 router.get('/login', function(req, res, next) {
@@ -89,6 +88,20 @@ function loggedIn(req, res, next) {
   } else {
     res.redirect('/');
   }
+}
+
+function averageReview(result, col){
+  console.log("The table is: ")
+  console.log(result.rows);
+  console.log("Rows: ");
+  console.log(result.rows.length);
+  console.log("Columns: ");
+  console.log(result.rows[col].height);
+  var average = 0;
+  for(var ctr=0; ctr<result.rows.height; ctr++){
+    average = average + result.rows[1].height;
+  }
+  return (average/result.rows.height);
 }
 
 router.get('/notAdmin',loggedIn,function(req, res, next){
@@ -179,12 +192,25 @@ router.post('/adminDashboard',function(req, res) {
 });
 
 router.get('/crimson',function(req, res) {
-  /*
-  client.query('SELECT * FROM reviews WHERE hall = $1', 'crimson', function(err, result) {
+  
+  
+  client.query("SELECT service, speed, food, busy FROM reviews WHERE hall = 'crimson'", function(err, result) {
     if (err) {
       console.log("unable to query SELECT for crimson dining");
       next(err);
     }
+    
+    console.log("Queried for crimson data, got: ");
+    console.log(result);
+    service = averageReview(result, 0);
+    speed = averageReview(result, 1);
+    food = averageReview(result, 2);
+    busy = averageReview(result, 3);
+    console.log(service);
+    res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
+
+
+  
     if(result.rows.length > 0){
       //load in review data for stuff
     }
@@ -192,8 +218,16 @@ router.get('/crimson',function(req, res) {
       //There are no reviews; set data values to 0
     }
   });
-    */
-    res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
+  
+
+  console.log("Queried for crimson data, got: ");
+  console.log(result);
+  service = averageReview(result, 0);
+  speed = averageReview(result, 1);
+  food = averageReview(result, 2);
+  busy = averageReview(result, 3);
+  console.log(service);
+  res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
 
 
   
