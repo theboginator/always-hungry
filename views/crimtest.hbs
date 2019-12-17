@@ -1,0 +1,26 @@
+<h2>Crimson Test</h2>
+
+
+<table id="Crim Stats">
+  <thead>
+  <tr><th>Username</th><th>Reported</th><th>Comment</th></tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr><td> {{ username }}</td>
+          <td> {{ published }}</td>
+          <td> {{ comment }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>

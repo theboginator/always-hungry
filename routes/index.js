@@ -90,16 +90,16 @@ function loggedIn(req, res, next) {
   }
 }
 
-function averageReview(result, col){
-  console.log("The table is: ")
+function averageReview(result, type){
+  console.log("Attempting to average: ");
   console.log(result.rows);
   console.log("Rows: ");
   console.log(result.rows.length);
   console.log("Columns: ");
-  console.log(result.rows[col]);
+  console.log(result.rowCount);
   var average = 0;
-  for(var ctr=0; ctr<result.rows.height; ctr++){
-    average = average + result.rows[1].height;
+  for(var ctr=0; ctr<result.rowCount; ctr++){
+    average = average + result.rows[ctr][type];
   }
   return (average/result.rows.height);
 }
@@ -191,10 +191,21 @@ router.post('/adminDashboard',function(req, res) {
   res.redirect('/adminDashboard'); 
 });
 
-router.get('/crimson',function(req, res) {
+router.get('/crimtest', function(req, response, next) {
+  client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson'", function(err, result) {
+    if (err) {
+      console.log("unable to query SELECT for crimson dining");
+      next(err);
+    }
+    response.render('crimtest', result);
+  });
+});
+
+router.get('/crimson',function(req, response, res) {
+
   
   
-  client.query("SELECT service, speed, food, busy FROM reviews WHERE hall = 'crimson'", function(err, result) {
+  client.query("SELECT username, published, comment FROM reviews WHERE hall = 'crimson'", function(err, result) {
     if (err) {
       console.log("unable to query SELECT for crimson dining");
       next(err);
@@ -203,15 +214,17 @@ router.get('/crimson',function(req, res) {
     console.log("Queried for crimson data, got: ");
     console.log(result.rows);
     console.log(result.rowCount);
+
     /*
-    service = averageReview(result, 0);
-    speed = averageReview(result, 1);
-    food = averageReview(result, 2);
-    busy = averageReview(result, 3);
+    service = averageReview(result, 'service');
+    speed = averageReview(result, 'speed');
+    food = averageReview(result, 'food');
+    busy = averageReview(result, 'busy');
+    console.log("service average:");
     console.log(service);
-    
     */
-    res.render('crimson', { user: req.user }); // Load the crimson review page with the reviews table
+    
+    response.render('crimson', result); // Load the crimson review page with the reviews table
 
 
   
